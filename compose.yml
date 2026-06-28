@@ -1,60 +1,113 @@
----
-services:
-  db:
-    image: anvesh786/pyapp:db_image
-    deploy:
-      replicas: 1
-    ports:
-      - "3306:3306"
-    networks:
-      - mynetwork
+# ---
+# services:
+#   db:
+#     image: anvesh786/pyapp:db_image
+#     deploy:
+#       replicas: 1
+#     ports:
+#       - "3306:3306"
+#     networks:
+#       - mynetwork
 
-  auth_service:
-    image: anvesh786/pyapp:auth_image
-    deploy:
-      replicas: 1
-    ports:
-      - "5001:5001"
-    networks:
-      - mynetwork
-    depends_on:
-      - db
+#   auth_service:
+#     image: anvesh786/pyapp:auth_image
+#     deploy:
+#       replicas: 1
+#     ports:
+#       - "5001:5001"
+#     networks:
+#       - mynetwork
+#     depends_on:
+#       - db
     
 
-  book_service:
-    image: anvesh786/pyapp:book_image
-    deploy:
-      replicas: 1
-    ports:
-      - "5002:5002"
-    networks:
-      - mynetwork
-    depends_on:
-      - db
-  borrow_service:
-    image: anvesh786/pyapp:borrow_image
-    deploy:
-      replicas: 1
-    ports:
-      - "5003:5003"
-    networks:
-      - mynetwork
-    depends_on:
-      - db
+#   book_service:
+#     image: anvesh786/pyapp:book_image
+#     deploy:
+#       replicas: 1
+#     ports:
+#       - "5002:5002"
+#     networks:
+#       - mynetwork
+#     depends_on:
+#       - db
+#   borrow_service:
+#     image: anvesh786/pyapp:borrow_image
+#     deploy:
+#       replicas: 1
+#     ports:
+#       - "5003:5003"
+#     networks:
+#       - mynetwork
+#     depends_on:
+#       - db
 
-  frontend:
-    image: anvesh786/pyapp:frontend
-    deploy:
-      replicas: 1
+#   frontend:
+#     image: anvesh786/pyapp:frontend
+#     deploy:
+#       replicas: 1
+#     ports:
+#       - "5000:5000"
+#     networks:
+#       - mynetwork
+#     depends_on:
+#       - auth
+#       - book
+#       - borrow
+
+# networks:
+#   mynetwork:
+#     driver: overlay
+
+services:
+  auth:
+    image: anvesh786/pyapp:auth_image
     ports:
-      - "5000:5000"
-    networks:
-      - mynetwork
+     - "80:80"
+    deploy:
+      replicas: 2
     depends_on:
-      - auth
       - book
       - borrow
+      - database
+        
+  book:
+    image: anvesh786/pyapp:book_image
+    ports:
+     - "5002:5002"
+    deploy:
+      replicas: 2
+    depends_on:
+      - database
+
+  borrow:
+    image: anvesh786/pyapp:borrow_image
+    ports: 
+     - "5003:5003"
+    deploy:
+      replicas: 2
+    depends_on:
+      - database
+      
+  database:
+    image: anvesh786/pyapp:db_image
+    ports:
+     - "3306:3306"
+    deploy:
+      replicas: 1
+  
+  front-end:
+    image: anvesh786/pyapp:front-end
+    ports:
+     - "5000"5000"
+    deploy:
+      replicas: 2
+    depends_on:
+      - auth
+      - database
 
 networks:
   mynetwork:
     driver: overlay
+    
+    
