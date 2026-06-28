@@ -108,7 +108,7 @@ services:
     image: anvesh786/pyapp:front-end
     ports:
      - "5000:5000"
-    network:
+    networks:
      - mynetwork
     deploy:
       replicas: 2
