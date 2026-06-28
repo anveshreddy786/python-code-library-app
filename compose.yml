@@ -107,7 +107,7 @@ services:
   front-end:
     image: anvesh786/pyapp:front-end
     ports:
-     - "5000"5000"
+     - "5000:5000"
     network:
      - mynetwork
     deploy:
