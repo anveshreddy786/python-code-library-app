@@ -64,6 +64,8 @@ services:
     image: anvesh786/pyapp:auth_image
     ports:
      - "5001:5001"
+    networks:
+     - mynetwork
     deploy:
       replicas: 2
     depends_on:
@@ -75,6 +77,8 @@ services:
     image: anvesh786/pyapp:book_image
     ports:
      - "5002:5002"
+    networks:
+     - mynetwork
     deploy:
       replicas: 2
     depends_on:
@@ -84,6 +88,8 @@ services:
     image: anvesh786/pyapp:borrow_image
     ports: 
      - "5003:5003"
+    networks:
+     - mynetwork
     deploy:
       replicas: 2
     depends_on:
@@ -93,6 +99,8 @@ services:
     image: anvesh786/pyapp:db_image
     ports:
      - "3306:3306"
+    networks:
+     - mynetwork
     deploy:
       replicas: 1
   
@@ -100,6 +108,8 @@ services:
     image: anvesh786/pyapp:front-end
     ports:
      - "5000"5000"
+    network:
+     - mynetwork
     deploy:
       replicas: 2
     depends_on:
