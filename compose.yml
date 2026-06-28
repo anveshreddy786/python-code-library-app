@@ -63,7 +63,7 @@ services:
   auth:
     image: anvesh786/pyapp:auth_image
     ports:
-     - "80:80"
+     - "5001:5001"
     deploy:
       replicas: 2
     depends_on:
