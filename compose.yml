@@ -60,7 +60,7 @@
 #     driver: overlay
 
 services:
-  auth:
+  auth_service:
     image: anvesh786/pyapp:auth_image
     ports:
      - "5001:5001"
